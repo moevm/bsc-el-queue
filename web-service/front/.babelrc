@@ -1,0 +1,32 @@
+{
+  "presets": [
+    ["@babel/preset-env", {
+      "modules": false,
+      "useBuiltIns": "usage",
+      "corejs": "2.0.0",
+      "targets": {
+        "browsers": ["last 2 versions", "ie >= 11"]
+      }
+    }],
+    ["@babel/react"]
+  ],
+  "plugins": [
+    ["@babel/plugin-proposal-decorators", { "legacy": true }],
+    ["@babel/plugin-proposal-class-properties", { "loose": true }],
+    ["@babel/plugin-proposal-optional-chaining"],
+    ["@babel/plugin-proposal-pipeline-operator", { "proposal": "minimal" }],
+    ["@babel/plugin-proposal-nullish-coalescing-operator"],
+    ["react-hot-loader/babel"],
+    ["syntax-dynamic-import"],
+    ["jsx-control-statements"],
+    [
+      "module-resolver",
+      {
+        "alias": {
+          "@app": "./app",
+          "@locale": "./app/locale/strings.js"
+        }
+      }
+    ]
+  ]
+}

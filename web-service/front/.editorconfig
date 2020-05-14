@@ -1,0 +1,27 @@
+# top-most EditorConfig file
+root = true
+
+# Unix-style newlines with a newline ending every file
+[*]
+end_of_line = lf
+insert_final_newline = true
+trim_trailing_whitespace = true
+charset = utf-8
+
+# Indentation override for all JS under lib directory
+[*.{js,jsx}]
+indent_style = space
+indent_size = 2
+
+[*.{scss,css}]
+indent_style = space
+indent_size = 4
+
+[*.html]
+indent_style = space
+indent_size = 2
+
+# Matches the exact files either package.json
+[{*.json}]
+indent_style = space
+indent_size = 2
