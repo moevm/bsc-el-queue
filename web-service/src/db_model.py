@@ -3,13 +3,14 @@ from bson.objectid import ObjectId
 
 import datetime
 
-from constants import DEFAULT_QUEUE_NAME
+from constants import DEFAULT_QUEUE_NAME, Roles
 
 MONGO_CLIENT = None
 HOST = 'localhost'
 PORT = 27017
 ROOMS = 'rooms'
 QUEUES = 'queues'
+USERS = 'users'
 
 
 def get_db_name():
@@ -94,3 +95,12 @@ def create_room(teacher_id, name, db=get_db_object()):
 
 def get_room_by_id(room_id, db=get_db_object()):
     return db[ROOMS].find_one({'_id': ObjectId(room_id)})
+
+
+def create_student(name, db=get_db_object()):
+    result = db[USERS].insert_one({
+        'name': name,
+        'roles': [Roles['STUDENT']]
+    })
+
+    return result.inserted_id
