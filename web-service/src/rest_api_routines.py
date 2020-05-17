@@ -1,6 +1,7 @@
 from flask_restful import Api
 from flask import Flask
 
+from add_student_to_queue import AddStudentToQueue
 from create_queue import CreateQueue
 from create_room import CreateRoom
 from create_student import CreateStudent
@@ -21,6 +22,8 @@ def addResources():
     getApi().add_resource(CreateQueue, API_ROUTE + '/room/<string:room_id>/queue')
     getApi().add_resource(GetQueue, API_ROUTE + '/room/<string:room_id>/queue/<string:queue_id>')
     getApi().add_resource(DeleteQueue, API_ROUTE + '/room/<string:room_id>/queue/<string:queue_id>')
+    getApi().add_resource(AddStudentToQueue,
+                          API_ROUTE + '/room/<string:room_id>/queue/<string:queue_id>/student/<string:student_id>')
 
     getApi().add_resource(CreateStudent, API_ROUTE + '/student')
 

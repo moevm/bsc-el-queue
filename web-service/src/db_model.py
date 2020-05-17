@@ -1,5 +1,6 @@
 from pymongo import MongoClient
 from bson.objectid import ObjectId
+from pydash import find
 
 import datetime
 
@@ -104,3 +105,27 @@ def create_student(name, db=get_db_object()):
     })
 
     return result.inserted_id
+
+
+def add_student_to_queue(queue_id, student_id, student_name, db=get_db_object()):
+    queue = db[QUEUES].find_one({
+        '_id': ObjectId(queue_id)
+    })
+
+    student = find(queue['students'], lambda student: student['_id'] == student_id)
+
+    if student:
+        return False
+
+    db[QUEUES].find_one_and_update({
+        '_id': ObjectId(queue_id)
+    }, {
+        '$push': {
+            'students': {
+                '_id': student_id,
+                'name': student_name,
+            }
+        }
+    })
+
+    return True
