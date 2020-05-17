@@ -129,3 +129,17 @@ def add_student_to_queue(queue_id, student_id, student_name, db=get_db_object())
     })
 
     return True
+
+
+def remove_student_from_queue(queue_id, student_id, db=get_db_object()):
+    db[QUEUES].find_one_and_update({
+        '_id': ObjectId(queue_id)
+    }, {
+        '$pull': {
+            'students': {
+                '_id': str(student_id),
+            }
+        }
+    })
+
+    return True
