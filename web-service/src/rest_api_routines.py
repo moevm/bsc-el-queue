@@ -9,6 +9,7 @@ from create_student import CreateStudent
 from delete_queue import DeleteQueue
 from get_queue import GetQueue
 from get_room import GetRoom
+from skip_student import SkipStudent
 
 from constants import API_ROUTE
 
@@ -27,6 +28,8 @@ def addResources():
                           API_ROUTE + '/room/<string:room_id>/queue/<string:queue_id>/student/<string:student_id>')
     getApi().add_resource(RemoveStudentFromQueue,
                           API_ROUTE + '/room/<string:room_id>/queue/<string:queue_id>/student/<string:student_id>')
+    getApi().add_resource(SkipStudent,
+                          API_ROUTE + '/room/<string:room_id>/queue/<string:queue_id>/student/<string:student_id>/skip')
 
     getApi().add_resource(CreateStudent, API_ROUTE + '/student')
 

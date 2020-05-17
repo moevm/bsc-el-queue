@@ -1,6 +1,6 @@
 from pymongo import MongoClient
 from bson.objectid import ObjectId
-from pydash import find
+from pydash import find, find_index, splice, concat
 
 import datetime
 
@@ -139,6 +139,27 @@ def remove_student_from_queue(queue_id, student_id, db=get_db_object()):
             'students': {
                 '_id': str(student_id),
             }
+        }
+    })
+
+    return True
+
+
+def skip_student(queue_id, student_id, db=get_db_object()):
+    queue = db[QUEUES].find_one({'_id': ObjectId(queue_id)})
+    students = queue['students'].copy()
+    student_index = find_index(students, lambda student: student['_id'] == student_id)
+
+    rest_students = splice(students, student_index)
+    student_after_current = splice(rest_students, 1, 1)
+
+    result_student_list = concat(students, student_after_current, rest_students)
+
+    db[QUEUES].find_one_and_update({
+        '_id': ObjectId(queue_id)
+    }, {
+        '$set': {
+            'students': result_student_list
         }
     })
 
