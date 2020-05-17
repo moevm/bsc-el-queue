@@ -1,0 +1,3 @@
+API_ROUTE = '/api'
+
+DEFAULT_QUEUE_NAME = 'DEFAULT'
