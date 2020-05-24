@@ -10,7 +10,20 @@ export default {
 
     room: {
       header: 'Комната',
-    }
+      userLogin: 'Авторизоваться',
+      registration: {
+        firstName: 'Имя',
+        firstNameError: 'Необходимо ввести имя',
+        lastName: 'Фамилия',
+        lastNameError: 'Необходимо ввести фамилию',
+        userId: 'ID',
+        userIdError: 'Наобходимо ввести ID',
+        goToRegister: 'Зарегистрироваться',
+        goToLogin: 'Авторизоваться',
+        register: 'Регистрация',
+        login: 'Войти',
+      },
+    },
   },
 
   common: {},
