@@ -11,6 +11,7 @@ export default {
     room: {
       header: 'Комната',
       userLogin: 'Авторизоваться',
+      comeIn: 'Добавиться в очередь',
       registration: {
         firstName: 'Имя',
         firstNameError: 'Необходимо ввести имя',

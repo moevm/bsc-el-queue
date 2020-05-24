@@ -1,5 +1,6 @@
 import React from 'react'
 import * as R from 'ramda'
+import { inject, observer } from 'mobx-react'
 
 import RemoteDataHOC from '@app/hocs/RemoteDataHOC'
 
@@ -11,6 +12,8 @@ import QueueStore from '@app/modules/queue/QueueStore'
 
 import { getSocketio } from '@app/socket'
 
+@inject('studentStore')
+@observer
 class RoomContainer extends React.Component {
   constructor(props) {
     super(props)
@@ -21,6 +24,18 @@ class RoomContainer extends React.Component {
     this.state = {
       currentQueue: props.data.queues |> R.head |> R.prop('id'),
     }
+
+    props.studentStore.checkIsInQueue({
+      roomId: props.data._id,
+      queueId: this.state.currentQueue,
+    })
+  }
+
+  componentDidUpdate() {
+    this.props.studentStore.checkIsInQueue({
+      roomId: this.props.data._id,
+      queueId: this.state.currentQueue,
+    })
   }
 
   toggleCurrentQueue = async (queueId) => {
@@ -64,7 +79,10 @@ class RoomContainer extends React.Component {
           socket={this.socket}
           queueId={currentQueue}
         />
-        <RoomActions />
+        <RoomActions
+          roomId={data._id}
+          queueId={currentQueue}
+        />
       </div>
     )
   }

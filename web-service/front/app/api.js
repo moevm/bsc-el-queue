@@ -26,6 +26,8 @@ const API = {
   },
   queue: {
     get: apiRequest('rooms/%(roomId)s/queues/%(queueId)s'),
+    addUser: apiRequest('rooms/%(roomId)s/queues/%(queueId)s/students/%(studentId)s', 'post'),
+    checkIsUserInQueue: apiRequest('rooms/%(roomId)s/queues/%(queueId)s/students/%(studentId)s'),
   },
   student: {
     register: apiRequest('students', 'post'),

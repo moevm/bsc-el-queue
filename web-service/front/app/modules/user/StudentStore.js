@@ -10,7 +10,7 @@ class StudentStore {
   constructor() {
     const studentId = localStorage.getItem(LOCAL_STUDENT_ID)
 
-    if(studentId) {
+    if (studentId) {
       console.log('Get studentId from localStorage: ', studentId)
 
       this.setId(studentId)
@@ -19,6 +19,7 @@ class StudentStore {
 
   @observable studentId = null
   @observable name = null
+  @observable isInQueue = false
 
   @action
   setId = (id) => {
@@ -30,6 +31,11 @@ class StudentStore {
   @action
   setName = (name) => {
     this.name = name
+  }
+
+  @action
+  setIsInQueue = (isInQueue) => {
+    this.isInQueue = isInQueue
   }
 
   setStudent = ({ name, id }) => {
@@ -70,6 +76,42 @@ class StudentStore {
       })
 
       return studentId
+    } catch (error) {
+      logger.error(error)
+
+      throw error
+    }
+  }
+
+  comeInQueue = async ({ roomId, queueId }) => {
+    try {
+      const result = await API.queue.addUser({
+        id: {
+          roomId,
+          queueId,
+          studentId: this.studentId,
+        },
+      })
+
+      this.setIsInQueue(true)
+    } catch (error) {
+      logger.error(error)
+
+      throw error
+    }
+  }
+
+  checkIsInQueue = async ({ roomId, queueId }) => {
+    try {
+      const result = await API.queue.checkIsUserInQueue({
+        id: {
+          roomId,
+          queueId,
+          studentId: this.studentId,
+        },
+      })
+
+      this.setIsInQueue(result)
     } catch (error) {
       logger.error(error)
 
