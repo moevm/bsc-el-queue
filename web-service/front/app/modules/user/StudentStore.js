@@ -1,16 +1,30 @@
 import * as R from 'ramda'
 import { action, computed, observable } from 'mobx'
 
-import API from '@app/api'
 import logger from '@app/lib/logger'
 
+import API from '@app/api'
+import { LOCAL_STUDENT_ID } from '@app/constants'
+
 class StudentStore {
+  constructor() {
+    const studentId = localStorage.getItem(LOCAL_STUDENT_ID)
+
+    if(studentId) {
+      console.log('Get studentId from localStorage: ', studentId)
+
+      this.setId(studentId)
+    }
+  }
+
   @observable studentId = null
   @observable name = null
 
   @action
   setId = (id) => {
     this.studentId = id
+
+    localStorage.setItem(LOCAL_STUDENT_ID, id)
   }
 
   @action

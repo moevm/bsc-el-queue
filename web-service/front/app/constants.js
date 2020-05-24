@@ -6,3 +6,5 @@ export const StoreState = {
   ERROR: 2,
   INACTIVE: 3,
 }
+
+export const LOCAL_STUDENT_ID = 'studentId'
