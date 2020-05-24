@@ -8,7 +8,7 @@ from constants import DEFAULT_QUEUE_NAME, Roles
 
 MONGO_CLIENT = None
 HOST = 'localhost'
-PORT = 27017
+PORT = 27018
 ROOMS = 'rooms'
 QUEUES = 'queues'
 USERS = 'users'
@@ -107,14 +107,18 @@ def create_student(name, db=get_db_object()):
     return result.inserted_id
 
 
-def add_student_to_queue(queue_id, student_id, student_name, db=get_db_object()):
+def add_student_to_queue(queue_id, student_id, db=get_db_object()):
     queue = db[QUEUES].find_one({
         '_id': ObjectId(queue_id)
     })
 
-    student = find(queue['students'], lambda student: student['_id'] == student_id)
+    student = db[USERS].find_one({
+        '_id': ObjectId(student_id)
+    })
 
-    if student:
+    student_in_queue = find(queue['students'], lambda student: student['id'] == student_id)
+
+    if student_in_queue:
         return False
 
     db[QUEUES].find_one_and_update({
@@ -122,8 +126,8 @@ def add_student_to_queue(queue_id, student_id, student_name, db=get_db_object())
     }, {
         '$push': {
             'students': {
-                '_id': student_id,
-                'name': student_name,
+                'id': student_id,
+                'name': student['name'],
             }
         }
     })
@@ -137,7 +141,7 @@ def remove_student_from_queue(queue_id, student_id, db=get_db_object()):
     }, {
         '$pull': {
             'students': {
-                '_id': str(student_id),
+                'id': str(student_id),
             }
         }
     })
@@ -148,7 +152,7 @@ def remove_student_from_queue(queue_id, student_id, db=get_db_object()):
 def skip_student(queue_id, student_id, db=get_db_object()):
     queue = db[QUEUES].find_one({'_id': ObjectId(queue_id)})
     students = queue['students'].copy()
-    student_index = find_index(students, lambda student: student['_id'] == student_id)
+    student_index = find_index(students, lambda student: student['id'] == student_id)
 
     rest_students = splice(students, student_index)
     student_after_current = splice(rest_students, 1, 1)
