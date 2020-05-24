@@ -15,7 +15,7 @@ const apiRequest = (path, method = 'get') => ({ body, query, id }) => {
   return request({
     method,
     url: url(urlWithParams),
-    body,
+    data: body,
     params: query,
   })
 }
@@ -25,7 +25,11 @@ const API = {
     get: apiRequest('rooms/%(roomId)s'),
   },
   queue: {
-    get: apiRequest('rooms/%(roomId)s/queues/%(queueId)s')
+    get: apiRequest('rooms/%(roomId)s/queues/%(queueId)s'),
+  },
+  student: {
+    register: apiRequest('students', 'post'),
+    login: apiRequest('students/%(studentId)s'),
   },
 }
 

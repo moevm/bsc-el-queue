@@ -1,6 +1,7 @@
 import React from 'react'
 import { observer, Provider } from 'mobx-react'
 import { withRouter } from 'react-router'
+import 'antd/dist/antd.css'
 
 import logger from '@app/lib/logger'
 
@@ -8,12 +9,15 @@ import logger from '@app/lib/logger'
 
 import ErrorPage from '@app/pages/Error/ErrorPage'
 
+import StudentStore from "@app/modules/user/StudentStore";
+
 @observer
 class App extends React.Component {
   constructor(props) {
     super(props)
 
     this.state = { error: null }
+    this.studentStore = new StudentStore()
   }
 
   static getDerivedStateFromError(error) {
@@ -37,7 +41,9 @@ class App extends React.Component {
     const { children } = this.props
 
     return (
-      <Provider>
+      <Provider
+        studentStore={this.studentStore}
+      >
         {children}
       </Provider>
     )
