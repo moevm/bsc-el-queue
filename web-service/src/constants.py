@@ -1,4 +1,4 @@
-API_ROUTE = '/api'
+API_ROUTE = '/'
 
 DEFAULT_QUEUE_NAME = 'DEFAULT'
 
