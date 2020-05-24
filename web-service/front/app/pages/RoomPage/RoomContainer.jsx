@@ -1,14 +1,15 @@
 import React from 'react'
 import * as R from 'ramda'
 
-import RemoteDataHOC from "@app/hocs/RemoteDataHOC";
+import RemoteDataHOC from '@app/hocs/RemoteDataHOC'
 
-import Queue from "@app/modules/queue/Queue";
-import QueueList from "@app/modules/queue/QueueList";
+import Queue from '@app/modules/queue/Queue'
+import QueueList from '@app/modules/queue/QueueList'
+import RoomActions from '@app/modules/room/RoomActions'
 
-import QueueStore from "@app/modules/queue/QueueStore";
+import QueueStore from '@app/modules/queue/QueueStore'
 
-import { getSocketio } from "@app/socket";
+import { getSocketio } from '@app/socket'
 
 class RoomContainer extends React.Component {
   constructor(props) {
@@ -18,7 +19,7 @@ class RoomContainer extends React.Component {
     this.socket = getSocketio()
 
     this.state = {
-      currentQueue: props.data.queues |> R.head |> R.prop('id')
+      currentQueue: props.data.queues |> R.head |> R.prop('id'),
     }
   }
 
@@ -44,7 +45,7 @@ class RoomContainer extends React.Component {
     const fetchData = {
       id: {
         roomId: data._id,
-        queueId: currentQueue
+        queueId: currentQueue,
       },
     }
 
@@ -63,7 +64,7 @@ class RoomContainer extends React.Component {
           socket={this.socket}
           queueId={currentQueue}
         />
-        {/*<Actions />*/}
+        <RoomActions />
       </div>
     )
   }
