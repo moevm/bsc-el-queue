@@ -2,6 +2,7 @@ from flask_restful import Api
 from flask import Flask
 from flask_socketio import SocketIO
 
+from check_is_student_in_queue import CheckIsStudentInQueue
 from get_student import GetStudent
 from remove_student_from_queue import RemoveStudentFromQueue
 from add_student_to_queue import AddStudentToQueue
@@ -31,6 +32,8 @@ def addResources():
     getApi().add_resource(AddStudentToQueue,
                           API_ROUTE + '/rooms/<string:room_id>/queues/<string:queue_id>/students/<string:student_id>')
     getApi().add_resource(RemoveStudentFromQueue,
+                          API_ROUTE + '/rooms/<string:room_id>/queues/<string:queue_id>/students/<string:student_id>')
+    getApi().add_resource(CheckIsStudentInQueue,
                           API_ROUTE + '/rooms/<string:room_id>/queues/<string:queue_id>/students/<string:student_id>')
     getApi().add_resource(SkipStudent,
                           API_ROUTE + '/rooms/<string:room_id>/queues/<string:queue_id>/students/<string:student_id>/skip')

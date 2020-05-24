@@ -120,7 +120,7 @@ def add_student_to_queue(queue_id, student_id, db=get_db_object()):
         '_id': ObjectId(student_id)
     })
 
-    student_in_queue = find(queue['students'], lambda student: student['id'] == student_id)
+    student_in_queue = is_student_in_queue(queue_id, student_id, db)
 
     if student_in_queue:
         return False
@@ -151,6 +151,17 @@ def remove_student_from_queue(queue_id, student_id, db=get_db_object()):
     })
 
     return True
+
+
+def is_student_in_queue(queue_id, student_id, db=get_db_object()):
+    queue = db[QUEUES].find_one({'_id': ObjectId(queue_id)})
+
+    student_in_queue = find(queue['students'], lambda student: student['id'] == student_id)
+
+    if student_in_queue:
+        return True
+
+    return False
 
 
 def skip_student(queue_id, student_id, db=get_db_object()):
