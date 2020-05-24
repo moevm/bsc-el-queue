@@ -107,6 +107,10 @@ def create_student(name, db=get_db_object()):
     return result.inserted_id
 
 
+def get_student_by_id(student_id, db=get_db_object()):
+    return db[USERS].find_one({'_id': ObjectId(student_id)})
+
+
 def add_student_to_queue(queue_id, student_id, db=get_db_object()):
     queue = db[QUEUES].find_one({
         '_id': ObjectId(queue_id)
