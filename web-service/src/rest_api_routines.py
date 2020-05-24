@@ -1,5 +1,6 @@
 from flask_restful import Api
 from flask import Flask
+from flask_socketio import SocketIO
 
 from remove_student_from_queue import RemoveStudentFromQueue
 from add_student_to_queue import AddStudentToQueue
@@ -10,12 +11,13 @@ from delete_queue import DeleteQueue
 from get_queue import GetQueue
 from get_room import GetRoom
 from skip_student import SkipStudent
-
+from socket_connection import socket_connection
 from constants import API_ROUTE
 
 API = None
 app = Flask(__name__)
-
+socketio = SocketIO(app, cors_allowed_origins='*')
+socket_connection(socketio)
 
 def addResources():
     getApi().add_resource(CreateRoom, API_ROUTE + '/room')
