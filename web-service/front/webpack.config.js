@@ -100,7 +100,7 @@ module.exports = {
     !isDev && new CleanWebpackPlugin({ dry: isDev }),
     new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
     new HtmlWebpackPlugin({
-      title: 'Reporting',
+      title: 'Online Queue',
       favicon: 'favicon.png',
       template: './index.html',
       production: !isDev,
