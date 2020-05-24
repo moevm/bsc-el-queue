@@ -6,6 +6,10 @@ export default {
 
     main: {
       header: 'MAIN',
+    },
+
+    room: {
+      header: 'Комната',
     }
   },
 
