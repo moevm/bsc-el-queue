@@ -77,8 +77,8 @@ def get_queue_by_id(queue_id, db=get_db_object()):
     return db[QUEUES].find_one({'_id': ObjectId(queue_id)})
 
 
-def get_queue_list_by_room_id(queue_id, db=get_db_object()):
-    return db[QUEUES].find({'room_id': ObjectId(queue_id)}).collection
+def get_queue_list_by_room_id(room_id, db=get_db_object()):
+    return db[QUEUES].find({'room_id': room_id})
 
 
 def create_room(teacher_id, name, db=get_db_object()):
@@ -89,7 +89,7 @@ def create_room(teacher_id, name, db=get_db_object()):
         'queues': [],
     })
 
-    create_queue(result.inserted_id)
+    create_queue(str(result.inserted_id))
 
     return result.inserted_id
 
