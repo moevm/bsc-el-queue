@@ -19,21 +19,22 @@ app = Flask(__name__)
 socketio = SocketIO(app, cors_allowed_origins='*')
 socket_connection(socketio)
 
+
 def addResources():
-    getApi().add_resource(CreateRoom, API_ROUTE + '/room')
-    getApi().add_resource(GetRoom, API_ROUTE + '/room/<string:room_id>')
+    getApi().add_resource(CreateRoom, API_ROUTE + '/rooms')
+    getApi().add_resource(GetRoom, API_ROUTE + '/rooms/<string:room_id>')
 
-    getApi().add_resource(CreateQueue, API_ROUTE + '/room/<string:room_id>/queue')
-    getApi().add_resource(GetQueue, API_ROUTE + '/room/<string:room_id>/queue/<string:queue_id>')
-    getApi().add_resource(DeleteQueue, API_ROUTE + '/room/<string:room_id>/queue/<string:queue_id>')
+    getApi().add_resource(CreateQueue, API_ROUTE + '/rooms/<string:room_id>/queues')
+    getApi().add_resource(GetQueue, API_ROUTE + '/rooms/<string:room_id>/queues/<string:queue_id>')
+    getApi().add_resource(DeleteQueue, API_ROUTE + '/rooms/<string:room_id>/queues/<string:queue_id>')
     getApi().add_resource(AddStudentToQueue,
-                          API_ROUTE + '/room/<string:room_id>/queue/<string:queue_id>/student/<string:student_id>')
+                          API_ROUTE + '/rooms/<string:room_id>/queues/<string:queue_id>/students/<string:student_id>')
     getApi().add_resource(RemoveStudentFromQueue,
-                          API_ROUTE + '/room/<string:room_id>/queue/<string:queue_id>/student/<string:student_id>')
+                          API_ROUTE + '/rooms/<string:room_id>/queues/<string:queue_id>/students/<string:student_id>')
     getApi().add_resource(SkipStudent,
-                          API_ROUTE + '/room/<string:room_id>/queue/<string:queue_id>/student/<string:student_id>/skip')
+                          API_ROUTE + '/rooms/<string:room_id>/queues/<string:queue_id>/students/<string:student_id>/skip')
 
-    getApi().add_resource(CreateStudent, API_ROUTE + '/student')
+    getApi().add_resource(CreateStudent, API_ROUTE + '/students')
 
 
 def getApp():
