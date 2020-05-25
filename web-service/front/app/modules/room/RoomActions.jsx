@@ -3,6 +3,7 @@ import { inject, observer } from 'mobx-react'
 
 import StudentRegistration from '@app/modules/user/StudentRegistration'
 import ComeInQueue from '@app/modules/room/ComeInQueue'
+import StudentInQueueActions from '@app/modules/room/StudentInQueueActions'
 
 @inject('studentStore')
 @observer
@@ -26,9 +27,10 @@ class RoomActions extends React.Component {
     }
 
     return (
-      <div>
-        Left
-      </div>
+      <StudentInQueueActions
+        roomId={roomId}
+        queueId={queueId}
+      />
     )
   }
 }

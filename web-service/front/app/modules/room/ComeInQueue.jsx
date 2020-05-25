@@ -18,11 +18,6 @@ class ComeInQueue extends React.Component {
     const { studentStore, roomId, queueId } = this.props
 
     await studentStore.comeInQueue({ roomId, queueId })
-      .then(() => {
-        this.setState({
-          loading: false,
-        })
-      })
   }
 
   render() {

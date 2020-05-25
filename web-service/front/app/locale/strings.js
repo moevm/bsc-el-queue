@@ -12,6 +12,8 @@ export default {
       header: 'Комната',
       userLogin: 'Авторизоваться',
       comeIn: 'Добавиться в очередь',
+      leave: 'Покинуть в очередь',
+      skip: 'Пропустить вперёд',
       registration: {
         firstName: 'Имя',
         firstNameError: 'Необходимо ввести имя',

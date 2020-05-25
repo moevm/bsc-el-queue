@@ -118,6 +118,40 @@ class StudentStore {
       throw error
     }
   }
+
+  leaveQueue = async ({ roomId, queueId }) => {
+    try {
+      const result = await API.queue.leave({
+        id: {
+          roomId,
+          queueId,
+          studentId: this.studentId,
+        },
+      })
+
+      this.setIsInQueue(false)
+    } catch (error) {
+      logger.error(error)
+
+      throw error
+    }
+  }
+
+  skipStudent = async ({ roomId, queueId }) => {
+    try {
+      await API.queue.skip({
+        id: {
+          roomId,
+          queueId,
+          studentId: this.studentId,
+        },
+      })
+    } catch (error) {
+      logger.error(error)
+
+      throw error
+    }
+  }
 }
 
 export default StudentStore
