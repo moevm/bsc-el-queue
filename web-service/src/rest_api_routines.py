@@ -3,7 +3,9 @@ from flask import Flask
 from flask_socketio import SocketIO
 
 from check_is_student_in_queue import CheckIsStudentInQueue
+from create_teacher import CreateTeacher
 from get_student import GetStudent
+from login_teacher import LoginTeacher
 from remove_student_from_queue import RemoveStudentFromQueue
 from add_student_to_queue import AddStudentToQueue
 from create_queue import CreateQueue
@@ -40,6 +42,9 @@ def addResources():
 
     getApi().add_resource(CreateStudent, API_ROUTE + '/students')
     getApi().add_resource(GetStudent, API_ROUTE + '/students/<string:student_id>')
+
+    getApi().add_resource(CreateTeacher, API_ROUTE + '/teaches')
+    getApi().add_resource(LoginTeacher, API_ROUTE + '/teaches/login')
 
 
 def getApp():

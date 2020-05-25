@@ -183,3 +183,22 @@ def skip_student(queue_id, student_id, db=get_db_object()):
     })
 
     return True
+
+
+def create_teacher(name, password, db=get_db_object()):
+    result = db[USERS].insert_one({
+        'name': name,
+        'password': password,
+        'roles': [Roles['TEACHER']],
+    })
+
+    return result.inserted_id
+
+
+def login_teacher(teacher_id, password, db=get_db_object()):
+    teacher = db[USERS].find_one({'_id': ObjectId(teacher_id)})
+
+    if teacher['password'] != password:
+        return False
+
+    return True
