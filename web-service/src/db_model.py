@@ -202,3 +202,9 @@ def login_teacher(teacher_id, password, db=get_db_object()):
         return False
 
     return True
+
+
+def get_user_role(user_id, db=get_db_object()):
+    user = db[USERS].find_one({'_id': ObjectId(user_id)})
+
+    return user['roles']
