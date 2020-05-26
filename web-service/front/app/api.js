@@ -35,6 +35,9 @@ const API = {
     register: apiRequest('students', 'post'),
     login: apiRequest('students/%(studentId)s'),
   },
+  user: {
+    role: apiRequest('/users/%(userId)s/role'),
+  }
 }
 
 export default API

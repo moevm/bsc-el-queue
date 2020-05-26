@@ -4,28 +4,24 @@ import { action, computed, observable } from 'mobx'
 import logger from '@app/lib/logger'
 
 import API from '@app/api'
-import { LOCAL_STUDENT_ID } from '@app/constants'
+import { LOCAL_USER_ID, StoreState, UserRole } from '@app/constants'
 
 class StudentStore {
-  constructor() {
-    const studentId = localStorage.getItem(LOCAL_STUDENT_ID)
-
-    if (studentId) {
-      console.log('Get studentId from localStorage: ', studentId)
-
-      this.setId(studentId)
-    }
+  constructor(studentId) {
+    this.studentId = studentId
   }
 
   @observable studentId = null
   @observable name = null
+  @observable state = StoreState.INACTIVE
   @observable isInQueue = false
+  role = UserRole.STUDENT
 
   @action
   setId = (id) => {
     this.studentId = id
 
-    localStorage.setItem(LOCAL_STUDENT_ID, id)
+    localStorage.setItem(LOCAL_USER_ID, id)
   }
 
   @action
@@ -38,49 +34,19 @@ class StudentStore {
     this.isInQueue = isInQueue
   }
 
-  setStudent = ({ name, id }) => {
-    this.setName(name)
-    this.setId(id)
+  @action
+  setState = (state) => {
+    this.state = state
+  }
+
+  @computed
+  get isPending() {
+    return this.state === StoreState.PENDING
   }
 
   @computed
   get isAuthorized() {
     return this.studentId |> R.isNil |> R.not
-  }
-
-
-  login = async ({ studentId }) => {
-    try {
-      const result = await API.student.login({
-        id: {
-          studentId,
-        },
-      })
-
-      console.log(result)
-      return result
-    } catch (error) {
-      logger.error(error)
-
-      throw error
-    }
-  }
-
-  register = async ({ firstName, lastName }) => {
-    try {
-      const { studentId } = await API.student.register({
-        body: {
-          firstName,
-          lastName,
-        },
-      })
-
-      return studentId
-    } catch (error) {
-      logger.error(error)
-
-      throw error
-    }
   }
 
   comeInQueue = async ({ roomId, queueId }) => {

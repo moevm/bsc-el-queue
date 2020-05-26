@@ -5,19 +5,19 @@ import 'antd/dist/antd.css'
 
 import logger from '@app/lib/logger'
 
-// import LoadingComponent from '@app/modules/ui/Loading/LoadingComponent'
-
+import LoadingComponent from '@app/modules/ui/Loading/LoadingComponent'
 import ErrorPage from '@app/pages/Error/ErrorPage'
 
-import StudentStore from "@app/modules/user/StudentStore";
+import UserStore from '@app/modules/user/UserStore'
 
 @observer
 class App extends React.Component {
   constructor(props) {
     super(props)
-
     this.state = { error: null }
-    this.studentStore = new StudentStore()
+
+    this.userStore = new UserStore()
+    this.userStore.getRole()
   }
 
   static getDerivedStateFromError(error) {
@@ -29,20 +29,22 @@ class App extends React.Component {
     logger.debug('Rendering App')
 
     const { error: criticalError } = this.state
+    const { children } = this.props
 
-    // if (this.userStore.isPending) {
-    //   return <LoadingComponent />
-    // }
+    const userStore = this.userStore.getInstance()
+
+    if (userStore.isPending) {
+      return <LoadingComponent />
+    }
 
     if (criticalError) {
       return <ErrorPage error={criticalError} />
     }
 
-    const { children } = this.props
 
     return (
       <Provider
-        studentStore={this.studentStore}
+        userStore={userStore}
       >
         {children}
       </Provider>
