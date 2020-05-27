@@ -1,11 +1,39 @@
 import React from 'react'
+import { inject, observer } from 'mobx-react'
 
+import StudentRegistration from '@app/modules/user/StudentRegistration'
+import TeacherRegistration from '@app/modules/user/TeacherRegistration'
+
+import Text from '@locale'
+import { UserRole } from '@app/constants'
+import { Route as StudentPageRoute } from '@app/pages/StudentPage'
+import { Route as TeacherPageRoute } from '@app/pages/TeacherPage'
+
+@inject('userStore', 'navigationStore')
+@observer
 class MainPage extends React.Component {
+  componentDidMount() {
+    const { userStore, navigationStore } = this.props
+
+    if (userStore.role === UserRole.STUDENT) {
+      navigationStore.goToPage(StudentPageRoute.path)
+    }
+
+    if (userStore.role === UserRole.TEACHER) {
+      navigationStore.goToPage(TeacherPageRoute.path)
+    }
+  }
+
   render() {
     return (
-      <React.Fragment>
-        <h1>TEST</h1>
-      </React.Fragment>
+      <div>
+        <StudentRegistration
+          startButtonText={Text.page.main.studentAuthentication}
+        />
+        <TeacherRegistration
+          startButtonText={Text.page.main.teacherAuthentication}
+        />
+      </div>
     )
   }
 }
