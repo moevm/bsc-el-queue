@@ -9,6 +9,7 @@ import LoadingComponent from '@app/modules/ui/Loading/LoadingComponent'
 import ErrorPage from '@app/pages/Error/ErrorPage'
 
 import UserStore from '@app/modules/user/UserStore'
+import NavigationStore from '@app/modules/navigation/NavigationStore'
 
 @observer
 class App extends React.Component {
@@ -17,8 +18,13 @@ class App extends React.Component {
     this.state = { error: null }
 
     this.userStore = new UserStore()
-    this.userStore.getRole()
+    this.navigationStore = new NavigationStore(this.props.history)
   }
+
+  componentDidMount() {
+    this.userStore.get()
+  }
+
 
   static getDerivedStateFromError(error) {
     return { error }
@@ -31,9 +37,7 @@ class App extends React.Component {
     const { error: criticalError } = this.state
     const { children } = this.props
 
-    const userStore = this.userStore.getInstance()
-
-    if (userStore.isPending) {
+    if (this.userStore.isPending) {
       return <LoadingComponent />
     }
 
@@ -44,7 +48,8 @@ class App extends React.Component {
 
     return (
       <Provider
-        userStore={userStore}
+        userStore={this.userStore}
+        navigationStore={this.navigationStore}
       >
         {children}
       </Provider>
