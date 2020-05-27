@@ -7,6 +7,7 @@ import { LOCAL_USER_ID, UserRole, StoreState } from '@app/constants'
 import API from '@app/api'
 import logger from '@app/lib/logger'
 import * as R from 'ramda'
+import TeacherStore from '@app/modules/user/TeacherStore'
 
 class UserStore {
   constructor() {
@@ -15,8 +16,8 @@ class UserStore {
 
   @observable id = null
   @observable data = null
+  @observable role = UserRole.UNAUTHORIZED
   @observable state = StoreState.INACTIVE
-  role = UserRole.UNAUTHORIZED
 
   @action
   setId = (id) => {
@@ -28,8 +29,11 @@ class UserStore {
   @action
   setData = (data) => {
     this.data = data
+  }
 
-    localStorage.setItem(LOCAL_USER_ID, id)
+  @action
+  setRole = (role) => {
+    this.role = role
   }
 
   @action
@@ -59,7 +63,6 @@ class UserStore {
 
       throw error
     }
-
   }
 
   studentLogin = async ({ studentId }) => {
@@ -70,8 +73,12 @@ class UserStore {
         },
       })
 
-      console.log(result)
+      const role = R.head(result.roles)
+      const userData = result |> R.omit(['_id', 'roles'])
+
       this.setId(result._id)
+      this.setRole(role)
+      this.setData(userData)
       return result
     } catch (error) {
       logger.error(error)
@@ -80,24 +87,69 @@ class UserStore {
     }
   }
 
-  teacherRegister = () => {
-  }
-  teacherLogin = () => {
+  teacherRegistration = async ({ firstName, lastName, password }) => {
+    try {
+      const { teacherId } = await API.teacher.register({
+        body: {
+          firstName,
+          lastName,
+          password,
+        },
+      })
+
+      this.setId(teacherId)
+
+      return teacherId
+    } catch (error) {
+      logger.error(error)
+
+      throw error
+    }
   }
 
-  getRole = async () => {
+  teacherLogin = async ({teacherId, password}) => {
+    try {
+      // const result = await API.teacher.login({
+      //   body: {
+      //     teacherId,
+      //     password
+      //   },
+      // })
+      const result = await API.student.login({
+        id: {
+          studentId: teacherId,
+        },
+      })
+
+
+      console.log(result)
+      if (result){
+        this.setId(teacherId)
+      }
+      return result
+    } catch (error) {
+      logger.error(error)
+
+      throw error
+    }
+  }
+
+  get = async () => {
     try {
       this.setState(StoreState.PENDING)
       if (this.id) {
-        const roles = await API.user.role({
+        const result = await API.user.get({
           id: {
             userId: this.id,
           },
         })
 
-        console.log(roles)
+        if(result) {
+          const userData = result |> R.omit('_id')
 
-        this.role = R.head(roles)
+          this.setRole(R.head(result.roles))
+          this.setData(userData)
+        }
       }
       this.setState(StoreState.DONE)
     } catch (err) {
@@ -116,11 +168,11 @@ class UserStore {
 
     console.log('Get studentId from localStorage: ', this.id)
     if (this.role === UserRole.STUDENT) {
-      return new StudentStore()
+      return new StudentStore(this.id, this.data)
     }
 
     if (this.role === UserRole.TEACHER) {
-      return new StudentStore()
+      return new TeacherStore(this.id, this.data)
     }
 
     return this
