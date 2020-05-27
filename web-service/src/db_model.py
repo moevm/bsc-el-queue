@@ -1,6 +1,6 @@
 from pymongo import MongoClient
 from bson.objectid import ObjectId
-from pydash import find, find_index, splice, concat
+from pydash import find, find_index, splice, concat, omit, update
 
 import datetime
 
@@ -201,10 +201,17 @@ def login_teacher(teacher_id, password, db=get_db_object()):
     if teacher['password'] != password:
         return False
 
-    return True
+    update(teacher, ['_id'], lambda val: str(val))
+    return omit(teacher, 'password')
 
 
 def get_user_role(user_id, db=get_db_object()):
     user = db[USERS].find_one({'_id': ObjectId(user_id)})
 
     return user['roles']
+
+
+def get_user_by_id(user_id, db=get_db_object()):
+    user = db[USERS].find_one({'_id': ObjectId(user_id)})
+
+    return user

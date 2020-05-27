@@ -5,6 +5,7 @@ from flask_socketio import SocketIO
 from check_is_student_in_queue import CheckIsStudentInQueue
 from create_teacher import CreateTeacher
 from get_student import GetStudent
+from get_user import GetUser
 from get_user_role import GetUserRole
 from login_teacher import LoginTeacher
 from remove_student_from_queue import RemoveStudentFromQueue
@@ -48,6 +49,7 @@ def addResources():
     getApi().add_resource(LoginTeacher, API_ROUTE + '/teaches/login')
 
     getApi().add_resource(GetUserRole, API_ROUTE + '/users/<string:user_id>/role')
+    getApi().add_resource(GetUser, API_ROUTE + '/users/<string:user_id>')
 
 
 def getApp():
