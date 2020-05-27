@@ -35,8 +35,13 @@ const API = {
     register: apiRequest('students', 'post'),
     login: apiRequest('students/%(studentId)s'),
   },
+  teacher: {
+    register: apiRequest('teachers', 'post'),
+    login: apiRequest('teachers/login', 'post'),
+  },
   user: {
-    role: apiRequest('/users/%(userId)s/role'),
+    role: apiRequest('users/%(userId)s/role'),
+    get: apiRequest('users/%(userId)s'),
   }
 }
 
