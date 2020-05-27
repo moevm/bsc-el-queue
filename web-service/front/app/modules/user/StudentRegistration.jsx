@@ -4,7 +4,7 @@ import { Modal, Button, Form, Input } from 'antd'
 
 import Text from '@locale'
 
-@inject('studentStore')
+@inject('userStore')
 @observer
 class StudentRegistration extends React.Component {
   state = {
@@ -37,16 +37,14 @@ class StudentRegistration extends React.Component {
       loading: true,
     })
 
-    const { studentStore } = this.props
+    const { userStore } = this.props
 
-    await studentStore.register(values)
-      .then(studentId => {
+    await userStore.studentRegistration(values)
+      .then(() => {
         this.setState({
           visible: false,
           loading: false,
         })
-
-        studentStore.setId(studentId)
       })
   }
 
@@ -55,17 +53,14 @@ class StudentRegistration extends React.Component {
       loading: true,
     })
 
-    const { studentStore } = this.props
+    const { userStore } = this.props
 
-    await studentStore.login(values)
+    await userStore.studentLogin(values)
       .then(({ _id, name }) => {
-        console.log(_id, name)
         this.setState({
           visible: false,
           loading: false,
         })
-
-        studentStore.setStudent({ id: _id, name })
       })
   }
 
@@ -83,12 +78,12 @@ class StudentRegistration extends React.Component {
       >
         {
           isLogin
-            ? Text.page.room.registration.goToRegister
-            : Text.page.room.registration.goToLogin
+            ? Text.registration.goToRegister
+            : Text.registration.goToLogin
         }
       </Button>,
       <Button
-        form="registration"
+        form="student-registration"
         key="submit"
         htmlType="submit"
         type="primary"
@@ -96,8 +91,8 @@ class StudentRegistration extends React.Component {
       >
         {
           isLogin
-            ? Text.page.room.registration.login
-            : Text.page.room.registration.register
+            ? Text.registration.login
+            : Text.registration.register
         }
       </Button>,
     ]
@@ -106,22 +101,22 @@ class StudentRegistration extends React.Component {
   renderRegistrationForm = () => {
     return (
       <Form
-        id="registration"
+        id="student-registration"
         onFinish={this.onRegistrationFinish}
         onFinishFailed={this.onFinishFailed}
       >
         <Form.Item
-          label={Text.page.room.registration.firstName}
+          label={Text.registration.firstName}
           name="firstName"
-          rules={[{ required: true, message: Text.page.room.registration.firstNameError }]}
+          rules={[{ required: true, message: Text.registration.firstNameError }]}
 
         >
           <Input/>
         </Form.Item>
         <Form.Item
-          label={Text.page.room.registration.lastName}
+          label={Text.registration.lastName}
           name="lastName"
-          rules={[{ required: true, message: Text.page.room.registration.lastNameError }]}
+          rules={[{ required: true, message: Text.registration.lastNameError }]}
         >
           <Input/>
         </Form.Item>
@@ -132,16 +127,16 @@ class StudentRegistration extends React.Component {
   renderLoginForm = () => {
     return (
       <Form
-        id="registration"
+        id="student-registration"
         onFinish={this.onLoginFinish}
         onFinishFailed={this.onFinishFailed}
       >
         <Form.Item
-          label={Text.page.room.registration.userId}
+          label={Text.registration.userId}
           name="studentId"
           rules={[{
             required: true,
-            message: Text.page.room.registration.userIdError,
+            message: Text.registration.userIdError,
           }]}
         >
           <Input/>
@@ -152,11 +147,12 @@ class StudentRegistration extends React.Component {
 
   render() {
     const { visible, isLogin } = this.state
+    const { startButtonText } = this.props
 
     return (
       <div>
         <Button type="primary" onClick={this.showModal}>
-          {Text.page.room.userLogin}
+          {startButtonText}
         </Button>
         <Modal
           title="Title"
