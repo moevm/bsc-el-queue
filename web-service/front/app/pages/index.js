@@ -5,6 +5,7 @@ import PageNotFound from './Error/PageNotFound'
 import { Route as MainRoute } from './MainPage'
 import { Route as RoomRoute } from './RoomPage'
 import { Route as StudentRoute } from './StudentPage'
+import { Route as TeacherRoute } from './TeacherPage'
 
 import Text from '@locale'
 
@@ -13,6 +14,7 @@ export const pageRoutes = [
 
   RoomRoute,
   StudentRoute,
+  TeacherRoute,
 ]
 
 export const defaultPageRoute = {
