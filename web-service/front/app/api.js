@@ -22,7 +22,8 @@ const apiRequest = (path, method = 'get') => ({ body, query, id }) => {
 
 const API = {
   room: {
-    get: apiRequest('rooms/%(roomId)s'),
+    create: apiRequest('/rooms', 'post'),
+    get: apiRequest('rooms/%(roomId)s')
   },
   queue: {
     get: apiRequest('rooms/%(roomId)s/queues/%(queueId)s'),
