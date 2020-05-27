@@ -7,11 +7,12 @@ import API from '@app/api'
 import { LOCAL_USER_ID, StoreState, UserRole } from '@app/constants'
 
 class StudentStore {
-  constructor(studentId) {
-    this.studentId = studentId
+  constructor(studentId, data) {
+    this.id = studentId
+    this.name = data?.name
   }
 
-  @observable studentId = null
+  @observable id = null
   @observable name = null
   @observable state = StoreState.INACTIVE
   @observable isInQueue = false
@@ -19,7 +20,7 @@ class StudentStore {
 
   @action
   setId = (id) => {
-    this.studentId = id
+    this.id = id
 
     localStorage.setItem(LOCAL_USER_ID, id)
   }
@@ -46,7 +47,7 @@ class StudentStore {
 
   @computed
   get isAuthorized() {
-    return this.studentId |> R.isNil |> R.not
+    return this.id |> R.isNil |> R.not
   }
 
   comeInQueue = async ({ roomId, queueId }) => {
@@ -55,7 +56,7 @@ class StudentStore {
         id: {
           roomId,
           queueId,
-          studentId: this.studentId,
+          studentId: this.id,
         },
       })
 
@@ -73,7 +74,7 @@ class StudentStore {
         id: {
           roomId,
           queueId,
-          studentId: this.studentId,
+          studentId: this.id,
         },
       })
 
@@ -91,7 +92,7 @@ class StudentStore {
         id: {
           roomId,
           queueId,
-          studentId: this.studentId,
+          studentId: this.id,
         },
       })
 
@@ -109,7 +110,7 @@ class StudentStore {
         id: {
           roomId,
           queueId,
-          studentId: this.studentId,
+          studentId: this.id,
         },
       })
     } catch (error) {
