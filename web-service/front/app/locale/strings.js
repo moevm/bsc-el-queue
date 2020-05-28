@@ -19,7 +19,6 @@ export default {
       createRoom: 'Создать комнату',
       roomName: 'Название комнаты',
       roomNameError: 'Необходимо назвать комнату',
-
     },
 
     room: {
@@ -28,6 +27,8 @@ export default {
       comeIn: 'Добавиться в очередь',
       leave: 'Покинуть в очередь',
       skip: 'Пропустить вперёд',
+      applyStudent: 'Принять текущего',
+      rejectStudent: 'Отклонить текущего',
     },
   },
 

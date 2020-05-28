@@ -30,6 +30,8 @@ const API = {
     addUser: apiRequest('rooms/%(roomId)s/queues/%(queueId)s/students/%(studentId)s', 'post'),
     checkIsUserInQueue: apiRequest('rooms/%(roomId)s/queues/%(queueId)s/students/%(studentId)s'),
     leave: apiRequest('rooms/%(roomId)s/queues/%(queueId)s/students/%(studentId)s', 'delete'),
+    applyStudent: apiRequest('rooms/%(roomId)s/queues/%(queueId)s/students/%(studentId)s/apply', 'put'),
+    rejectStudent: apiRequest('rooms/%(roomId)s/queues/%(queueId)s/students/%(studentId)s/reject', 'put'),
     skip: apiRequest('rooms/%(roomId)s/queues/%(queueId)s/students/%(studentId)s/skip', 'put'),
   },
   student: {

@@ -48,7 +48,26 @@ class TeacherStore {
 
       throw error
     }
+  }
 
+  applyStudent = async ({ roomId, queueId, studentId }) => {
+    await API.queue.applyStudent({
+      id: {
+        roomId,
+        queueId,
+        studentId,
+      },
+    })
+  }
+
+  rejectStudent = async ({ roomId, queueId, studentId }) => {
+    await API.queue.rejectStudent({
+      id: {
+        roomId,
+        queueId,
+        studentId,
+      },
+    })
   }
 }
 

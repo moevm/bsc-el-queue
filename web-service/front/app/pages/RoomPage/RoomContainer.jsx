@@ -72,6 +72,7 @@ class RoomContainer extends React.Component {
           roomId={data._id}
           queueId={currentQueue}
           userStore={userStore}
+          queueStore={this.queueStore}
         />
       </div>
     )
