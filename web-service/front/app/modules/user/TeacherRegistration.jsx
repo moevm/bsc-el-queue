@@ -1,11 +1,8 @@
 import React from 'react'
-import { inject, observer } from 'mobx-react'
 import { Modal, Button, Form, Input } from 'antd'
 
 import Text from '@locale'
 
-@inject('userStore')
-@observer
 class TeacherRegistration extends React.Component {
   state = {
     visible: false,

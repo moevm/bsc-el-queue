@@ -12,7 +12,7 @@ import { Route as TeacherPageRoute } from '@app/pages/TeacherPage'
 @inject('userStore', 'navigationStore')
 @observer
 class MainPage extends React.Component {
-  componentDidMount() {
+  render() {
     const { userStore, navigationStore } = this.props
 
     if (userStore.role === UserRole.STUDENT) {
@@ -22,16 +22,16 @@ class MainPage extends React.Component {
     if (userStore.role === UserRole.TEACHER) {
       navigationStore.goToPage(TeacherPageRoute.path)
     }
-  }
 
-  render() {
     return (
       <div>
         <StudentRegistration
           startButtonText={Text.page.main.studentAuthentication}
+          userStore={userStore}
         />
         <TeacherRegistration
           startButtonText={Text.page.main.teacherAuthentication}
+          userStore={userStore}
         />
       </div>
     )
