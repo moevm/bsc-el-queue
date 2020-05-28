@@ -1,33 +1,38 @@
 import React from 'react'
-import { inject, observer } from 'mobx-react'
 
+import { UserRole } from '@app/constants'
+import StudentRoomActions from '@app/modules/room/StudentRoomActions'
 import StudentRegistration from '@app/modules/user/StudentRegistration'
-import ComeInQueue from '@app/modules/room/ComeInQueue'
-import StudentInQueueActions from '@app/modules/room/StudentInQueueActions'
 
-@inject('studentStore')
-@observer
+import Text from '@locale'
+import TeacherRegistration from '@app/modules/user/TeacherRegistration'
+
 class RoomActions extends React.Component {
   render() {
-    const { studentStore, roomId, queueId } = this.props
+    const { roomId, queueId, userStore } = this.props
 
-    if (!studentStore.isAuthorized) {
+    if (userStore.role === UserRole.UNAUTHORIZED) {
       return (
-        <StudentRegistration/>
+        <>
+          <StudentRegistration
+            startButtonText={Text.page.main.studentAuthentication}
+            userStore={userStore}
+          />
+          <TeacherRegistration
+            startButtonText={Text.page.main.teacherAuthentication}
+            userStore={userStore}
+          />
+        </>
       )
     }
 
-    if (!studentStore.isInQueue) {
-      return (
-        <ComeInQueue
-          roomId={roomId}
-          queueId={queueId}
-        />
-      )
+    if (userStore.role === UserRole.TEACHER) {
+      return 'TEACHER'
     }
 
     return (
-      <StudentInQueueActions
+      <StudentRoomActions
+        userStore={userStore}
         roomId={roomId}
         queueId={queueId}
       />

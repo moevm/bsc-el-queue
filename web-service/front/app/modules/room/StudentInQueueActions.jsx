@@ -1,11 +1,8 @@
 import React from 'react'
-import { inject, observer } from 'mobx-react'
 import { Button } from 'antd'
 
 import Text from '@locale'
 
-@inject('studentStore')
-@observer
 class StudentInQueueActions extends React.Component {
   state = {
     leaveLoading: false,
@@ -13,23 +10,23 @@ class StudentInQueueActions extends React.Component {
   }
 
   handleLeaveClick = async () => {
-    const { studentStore, roomId, queueId } = this.props
+    const { userStore, roomId, queueId } = this.props
 
     this.setState({
       leaveLoading: true,
     })
 
-    await studentStore.leaveQueue({ roomId, queueId })
+    await userStore.leaveQueue({ roomId, queueId })
   }
 
   handleSkipClick = async () => {
-    const { studentStore, roomId, queueId } = this.props
+    const { userStore, roomId, queueId } = this.props
 
     this.setState({
       skipLoading: true,
     })
 
-    await studentStore.skipStudent({ roomId, queueId })
+    await userStore.skipStudent({ roomId, queueId })
       .then(() => {
         this.setState({
           skipLoading: false,

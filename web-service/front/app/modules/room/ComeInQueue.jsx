@@ -1,11 +1,8 @@
 import React from 'react'
-import { inject, observer } from 'mobx-react'
 import { Button } from 'antd'
 
 import Text from '@locale'
 
-@inject('studentStore')
-@observer
 class ComeInQueue extends React.Component {
   state = {
     loading: false,
@@ -15,9 +12,9 @@ class ComeInQueue extends React.Component {
     this.setState({
       loading: true,
     })
-    const { studentStore, roomId, queueId } = this.props
+    const { userStore, roomId, queueId } = this.props
 
-    await studentStore.comeInQueue({ roomId, queueId })
+    await userStore.comeInQueue({ roomId, queueId })
   }
 
   render() {
