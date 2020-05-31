@@ -1,41 +1,22 @@
-import { action, computed, observable } from 'mobx'
+import { computed } from 'mobx'
 
-import { LOCAL_USER_ID, StoreState, UserRole } from '@app/constants'
+import { UserRole } from '@app/constants'
 import API from '@app/api'
 import logger from '@app/lib/logger'
+import UserStore from '@app/modules/user/UserStore'
 
-class TeacherStore {
+class TeacherStore extends UserStore {
   constructor(id, data) {
+    super()
+
     this.id = id
-    this.name = data?.name
-  }
-
-  @observable id = null
-  @observable name = null
-  @observable state = StoreState.INACTIVE
-  @observable queueStore = false
-  role = UserRole.TEACHER
-
-  @action
-  setId = (id) => {
-    this.id = id
-
-    localStorage.setItem(LOCAL_USER_ID, id)
-  }
-
-  @action
-  setQueueStore = (queueStore) => {
-    this.queueStore = queueStore
-  }
-
-  @action
-  setState = (state) => {
-    this.state = state
+    this.data = data
+    this.role = UserRole.TEACHER
   }
 
   @computed
-  get isPending() {
-    return this.state === StoreState.PENDING
+  get name() {
+    return this.data?.name
   }
 
   createRoom = async ({ name }) => {

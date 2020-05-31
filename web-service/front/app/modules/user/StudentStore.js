@@ -1,50 +1,26 @@
 import * as R from 'ramda'
-import { action, computed, observable } from 'mobx'
+import { computed } from 'mobx'
 
-import { LOCAL_USER_ID, StoreState, UserRole } from '@app/constants'
+import { UserRole } from '@app/constants'
+import UserStore from '@app/modules/user/UserStore'
 
-class StudentStore {
+class StudentStore extends UserStore {
   constructor(studentId, data) {
+    super()
+
     this.id = studentId
-    this.name = data?.name
+    this.data = data
+    this.role = UserRole.TEACHER
   }
 
-  @observable id = null
-  @observable name = null
-  @observable state = StoreState.INACTIVE
-  @observable queueStore = false
-  role = UserRole.STUDENT
+  @computed
+  get name() {
+    return this.data?.name
+  }
 
   @computed
   get isInQueue() {
     return this.queueStore.isStudentInQueue(this.id)
-  }
-
-  @action
-  setId = (id) => {
-    this.id = id
-
-    localStorage.setItem(LOCAL_USER_ID, id)
-  }
-
-  @action
-  setName = (name) => {
-    this.name = name
-  }
-
-  @action
-  setQueueStore = (queueStore) => {
-    this.queueStore = queueStore
-  }
-
-  @action
-  setState = (state) => {
-    this.state = state
-  }
-
-  @computed
-  get isPending() {
-    return this.state === StoreState.PENDING
   }
 
   @computed

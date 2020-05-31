@@ -8,7 +8,7 @@ import logger from '@app/lib/logger'
 import LoadingComponent from '@app/modules/ui/Loading/LoadingComponent'
 import ErrorPage from '@app/pages/Error/ErrorPage'
 
-import UserStore from '@app/modules/user/UserStore'
+import UnauthorizedUserStore from '@app/modules/user/UnauthorizedUserStore'
 import NavigationStore from '@app/modules/navigation/NavigationStore'
 
 @observer
@@ -17,7 +17,7 @@ class App extends React.Component {
     super(props)
     this.state = { error: null }
 
-    this.userStore = new UserStore()
+    this.userStore = new UnauthorizedUserStore()
     this.navigationStore = new NavigationStore(this.props.history)
   }
 
