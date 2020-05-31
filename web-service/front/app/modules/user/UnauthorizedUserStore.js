@@ -1,6 +1,6 @@
 import StudentStore from '@app/modules/user/StudentStore'
 
-import { LOCAL_USER_ID, UserRole, StoreState } from '@app/constants'
+import { LOCAL_USER_ID, StoreState } from '@app/constants'
 
 import API from '@app/api'
 import logger from '@app/lib/logger'
@@ -140,11 +140,11 @@ class UnauthorizedUserStore extends UserStore {
     }
 
     console.log('Get studentId from localStorage: ', this.id)
-    if (this.role === UserRole.STUDENT) {
+    if (this.isStudent) {
       return new StudentStore(this.id, this.data)
     }
 
-    if (this.role === UserRole.TEACHER) {
+    if (this.isTeacher) {
       return new TeacherStore(this.id, this.data)
     }
 

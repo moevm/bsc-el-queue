@@ -4,8 +4,6 @@ import { observer } from 'mobx-react'
 import QueueListItem from '@app/modules/queue/QueueListItem'
 import CreateQueue from '@app/modules/queue/CreateQueue'
 
-import { UserRole } from '@app/constants'
-
 @observer
 class QueueList extends React.Component {
   componentDidMount() {
@@ -29,8 +27,6 @@ class QueueList extends React.Component {
   render() {
     const { roomStore, userStore } = this.props
 
-    const isQueueRemovable = userStore.role === UserRole.TEACHER
-
     return (
       <div>
         <div>Queue list:</div>
@@ -42,10 +38,10 @@ class QueueList extends React.Component {
             onQueueClick={this.handleQueueClick}
             onRemoveClick={this.handleQueueRemove}
             isCurrent={roomStore.isQueueCurrent(queue.id)}
-            removable={isQueueRemovable}
+            removable={userStore.isTeacher}
           />
         </For>
-        <If condition={userStore.role === UserRole.TEACHER}>
+        <If condition={userStore.isTeacher}>
           <CreateQueue
             roomStore={roomStore}
           />

@@ -6,10 +6,9 @@ import TeacherRegistration from '@app/modules/user/TeacherRegistration'
 import TeacherRoomActions from '@app/modules/room/TeacherRoomActions'
 
 import Text from '@locale'
-import { UserRole } from '@app/constants'
 
 const RoomActions = ({ userStore }) => {
-  if (userStore.role === UserRole.STUDENT) {
+  if (userStore.isStudent) {
     return (
       <StudentRoomActions
         userStore={userStore}
@@ -17,7 +16,7 @@ const RoomActions = ({ userStore }) => {
     )
   }
 
-  if (userStore.role === UserRole.TEACHER) {
+  if (userStore.isTeacher) {
     return (
       <TeacherRoomActions
         userStore={userStore}

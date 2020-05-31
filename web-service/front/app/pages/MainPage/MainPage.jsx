@@ -5,7 +5,6 @@ import StudentRegistration from '@app/modules/user/StudentRegistration'
 import TeacherRegistration from '@app/modules/user/TeacherRegistration'
 
 import Text from '@locale'
-import { UserRole } from '@app/constants'
 import { Route as StudentPageRoute } from '@app/pages/StudentPage'
 import { Route as TeacherPageRoute } from '@app/pages/TeacherPage'
 
@@ -15,11 +14,11 @@ class MainPage extends React.Component {
   render() {
     const { userStore, navigationStore } = this.props
 
-    if (userStore.role === UserRole.STUDENT) {
+    if (userStore.isStudent) {
       navigationStore.goToPage(StudentPageRoute.path)
     }
 
-    if (userStore.role === UserRole.TEACHER) {
+    if (userStore.isTeacher) {
       navigationStore.goToPage(TeacherPageRoute.path)
     }
 

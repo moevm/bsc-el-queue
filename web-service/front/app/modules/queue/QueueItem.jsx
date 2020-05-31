@@ -2,7 +2,6 @@ import React from 'react'
 import { Button, Modal } from 'antd'
 
 import Text from '@locale'
-import { UserRole } from '@app/constants'
 
 class QueueItem extends React.Component {
   constructor(props) {
@@ -42,12 +41,10 @@ class QueueItem extends React.Component {
   render() {
     const { name, userStore } = this.props
 
-    const showOptions = userStore.role === UserRole.TEACHER
-
     return (
       <div>
         <div>{name}</div>
-        <If condition={showOptions}>
+        <If condition={userStore.isTeacher}>
           <Button
             onClick={this.showModal}
           >
