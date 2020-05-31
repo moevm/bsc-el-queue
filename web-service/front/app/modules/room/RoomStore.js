@@ -43,4 +43,15 @@ export default class RoomStore extends AbstractFetchStore {
       },
     })
   }
+
+  createQueue = async ({ name }) => {
+    await API.queue.create({
+      id: {
+        roomId: this.id,
+      },
+      body: {
+        name,
+      },
+    })
+  }
 }

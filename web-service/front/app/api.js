@@ -26,6 +26,7 @@ const API = {
     get: apiRequest('rooms/%(roomId)s')
   },
   queue: {
+    create: apiRequest('rooms/%(roomId)s/queues', 'post'),
     get: apiRequest('rooms/%(roomId)s/queues/%(queueId)s'),
     delete: apiRequest('rooms/%(roomId)s/queues/%(queueId)s', 'delete'),
     addUser: apiRequest('rooms/%(roomId)s/queues/%(queueId)s/students/%(studentId)s', 'post'),

@@ -2,6 +2,8 @@ import React from 'react'
 import { observer } from 'mobx-react'
 
 import QueueListItem from '@app/modules/queue/QueueListItem'
+import CreateQueue from '@app/modules/queue/CreateQueue'
+
 import { UserRole } from '@app/constants'
 
 @observer
@@ -43,6 +45,11 @@ class QueueList extends React.Component {
             removable={isQueueRemovable}
           />
         </For>
+        <If condition={userStore.role === UserRole.TEACHER}>
+          <CreateQueue
+            roomStore={roomStore}
+          />
+        </If>
       </div>
     )
   }

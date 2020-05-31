@@ -4,6 +4,10 @@ export default {
       header: 'Старница не найдена',
     },
 
+    error: {
+      header: 'Ошибка',
+    },
+
     main: {
       header: 'Главная',
       studentAuthentication: 'Авторизоваться как студент',
@@ -29,6 +33,9 @@ export default {
       skip: 'Пропустить вперёд',
       applyStudent: 'Принять текущего',
       rejectStudent: 'Отклонить текущего',
+      newQueue: 'Новая комната',
+      queueName: 'Название комнаты',
+      queueNameError: 'Необходимо ввести название комнаты',
     },
   },
 
