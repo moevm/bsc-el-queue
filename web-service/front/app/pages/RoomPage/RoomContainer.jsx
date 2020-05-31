@@ -61,6 +61,7 @@ class RoomContainer extends React.Component {
           fetchData={fetchData}
           fetchStore={this.queueStore}
           socket={this.socket}
+          userStore={userStore}
         />
         <If condition={!this.queueStore.isPending}>
           <RoomActions

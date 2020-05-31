@@ -2,6 +2,7 @@ import React from 'react'
 import { observer } from 'mobx-react'
 
 import RemoteDataHOC from "@app/hocs/RemoteDataHOC";
+import QueueItem from '@app/modules/queue/QueueItem'
 
 @observer
 class Queue extends React.Component {
@@ -22,14 +23,19 @@ class Queue extends React.Component {
   }
 
   render() {
-    const { data } = this.props
+    const { data, userStore } = this.props
 
     return (
       <div>
         <div>Students:</div>
         <div>
           <For each='student' of={data.students}>
-            <div key={student.id}>{student.name}</div>
+            <QueueItem
+              key={student.id}
+              id={student.id}
+              name={student.name}
+              userStore={userStore}
+              />
           </For>
         </div>
       </div>
