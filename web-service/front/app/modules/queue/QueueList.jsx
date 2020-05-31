@@ -38,10 +38,10 @@ class QueueList extends React.Component {
             onQueueClick={this.handleQueueClick}
             onRemoveClick={this.handleQueueRemove}
             isCurrent={roomStore.isQueueCurrent(queue.id)}
-            removable={userStore.isTeacher}
+            removable={userStore.isTeacher && userStore.teacherAllowed}
           />
         </For>
-        <If condition={userStore.isTeacher}>
+        <If condition={userStore.isTeacher && userStore.teacherAllowed}>
           <CreateQueue
             roomStore={roomStore}
           />

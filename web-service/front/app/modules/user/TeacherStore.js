@@ -1,9 +1,12 @@
+import * as R from 'ramda'
 import { computed } from 'mobx'
+
+import logger from '@app/lib/logger'
+
+import UserStore from '@app/modules/user/UserStore'
 
 import { UserRole } from '@app/constants'
 import API from '@app/api'
-import logger from '@app/lib/logger'
-import UserStore from '@app/modules/user/UserStore'
 
 class TeacherStore extends UserStore {
   constructor(id, data) {
@@ -17,6 +20,11 @@ class TeacherStore extends UserStore {
   @computed
   get name() {
     return this.data?.name
+  }
+
+  @computed
+  get teacherAllowed() {
+    return this.roomStore.teachers |> R.includes(this.id)
   }
 
   createRoom = async ({ name }) => {

@@ -21,6 +21,11 @@ export default class RoomStore extends AbstractFetchStore {
     return this.data?.queues
   }
 
+  @computed
+  get teachers() {
+    return this.data?.teachers
+  }
+
   @action
   setQueues = (queues) => {
     this.data.queues = queues

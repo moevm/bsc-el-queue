@@ -15,6 +15,13 @@ class TeacherRoomActions extends React.Component {
   }
 
   render() {
+    //TODO Добавить механизм запроса доступа преподавателем
+    if (!this.props.userStore.teacherAllowed) {
+      return (
+        <div>Запросить доступ</div>
+      )
+    }
+
     return (
       <>
         <Button

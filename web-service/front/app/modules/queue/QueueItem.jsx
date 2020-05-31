@@ -44,7 +44,7 @@ class QueueItem extends React.Component {
     return (
       <div>
         <div>{name}</div>
-        <If condition={userStore.isTeacher}>
+        <If condition={userStore.isTeacher && userStore.teacherAllowed}>
           <Button
             onClick={this.showModal}
           >

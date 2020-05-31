@@ -40,6 +40,7 @@ class RoomContainer extends React.Component {
     const userStore = this.props.userStore.getInstance()
 
     userStore.setQueueStore(this.queueStore)
+    userStore.setRoomStore(this.roomStore)
 
     const fetchData = {
       id: {
