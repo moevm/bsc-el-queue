@@ -1,9 +1,6 @@
 import * as R from 'ramda'
 import { action, computed, observable } from 'mobx'
 
-import logger from '@app/lib/logger'
-
-import API from '@app/api'
 import { LOCAL_USER_ID, StoreState, UserRole } from '@app/constants'
 
 class StudentStore {
@@ -15,8 +12,13 @@ class StudentStore {
   @observable id = null
   @observable name = null
   @observable state = StoreState.INACTIVE
-  @observable isInQueue = false
+  @observable queueStore = false
   role = UserRole.STUDENT
+
+  @computed
+  get isInQueue() {
+    return this.queueStore.isStudentInQueue(this.id)
+  }
 
   @action
   setId = (id) => {
@@ -31,8 +33,8 @@ class StudentStore {
   }
 
   @action
-  setIsInQueue = (isInQueue) => {
-    this.isInQueue = isInQueue
+  setQueueStore = (queueStore) => {
+    this.queueStore = queueStore
   }
 
   @action
@@ -50,74 +52,16 @@ class StudentStore {
     return this.id |> R.isNil |> R.not
   }
 
-  comeInQueue = async ({ roomId, queueId }) => {
-    try {
-      const result = await API.queue.addUser({
-        id: {
-          roomId,
-          queueId,
-          studentId: this.id,
-        },
-      })
-
-      this.setIsInQueue(true)
-    } catch (error) {
-      logger.error(error)
-
-      throw error
-    }
+  comeInQueue = async () => {
+    await this.queueStore.addStudent(this.id)
   }
 
-  checkIsInQueue = async ({ roomId, queueId }) => {
-    try {
-      const result = await API.queue.checkIsUserInQueue({
-        id: {
-          roomId,
-          queueId,
-          studentId: this.id,
-        },
-      })
-
-      this.setIsInQueue(result)
-    } catch (error) {
-      logger.error(error)
-
-      throw error
-    }
+  leaveQueue = async () => {
+    await this.queueStore.removeStudent(this.id)
   }
 
-  leaveQueue = async ({ roomId, queueId }) => {
-    try {
-      const result = await API.queue.leave({
-        id: {
-          roomId,
-          queueId,
-          studentId: this.id,
-        },
-      })
-
-      this.setIsInQueue(false)
-    } catch (error) {
-      logger.error(error)
-
-      throw error
-    }
-  }
-
-  skipStudent = async ({ roomId, queueId }) => {
-    try {
-      await API.queue.skip({
-        id: {
-          roomId,
-          queueId,
-          studentId: this.id,
-        },
-      })
-    } catch (error) {
-      logger.error(error)
-
-      throw error
-    }
+  skip = async () => {
+    await this.queueStore.skipStudent(this.id)
   }
 }
 

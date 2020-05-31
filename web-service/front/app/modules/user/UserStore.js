@@ -121,8 +121,12 @@ class UserStore {
         },
       })
 
+      const role = R.head(result.roles)
+      const userData = result |> R.omit(['_id', 'roles'])
 
-      console.log(result)
+      this.setId(result._id)
+      this.setRole(role)
+      this.setData(userData)
       if (result){
         this.setId(teacherId)
       }

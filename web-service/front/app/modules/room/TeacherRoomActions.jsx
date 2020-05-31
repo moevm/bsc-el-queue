@@ -7,25 +7,11 @@ import Text from '@locale'
 @observer
 class TeacherRoomActions extends React.Component {
   handleApplyCurrentStudent = () => {
-    const { roomId, queueId, userStore, queueStore } = this.props
-    const studentId = queueStore.firstStudent.id
-
-    userStore.applyStudent({
-      roomId,
-      queueId,
-      studentId,
-    })
+    this.props.userStore.applyStudent()
   }
 
   handleRejectCurrentStudent = () => {
-    const { roomId, queueId, userStore, queueStore } = this.props
-    const studentId = queueStore.firstStudent.id
-
-    userStore.rejectStudent({
-      roomId,
-      queueId,
-      studentId,
-    })
+    this.props.userStore.rejectStudent()
   }
 
   render() {

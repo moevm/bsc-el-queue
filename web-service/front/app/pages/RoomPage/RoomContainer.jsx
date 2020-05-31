@@ -18,38 +18,33 @@ class RoomContainer extends React.Component {
   constructor(props) {
     super(props)
 
+    this.roomStore = props.fetchStore
     this.queueStore = new QueueStore()
     this.socket = getSocketio()
 
-    this.state = {
-      currentQueue: props.data.queues |> R.head |> R.prop('id'),
-    }
+    props.data.queues |> R.head |> R.prop('id') |> this.roomStore.setCurrentQueue
   }
 
   toggleCurrentQueue = async (queueId) => {
-    const { data } = this.props
-
-    this.setState({
-      currentQueue: queueId,
-    })
+    this.roomStore.setCurrentQueue(queueId)
 
     await this.queueStore.loadData({
       id: {
-        roomId: data._id,
+        roomId: this.roomStore.id,
         queueId,
       },
     })
   }
 
   render() {
-    const { data } = this.props
-    const { currentQueue } = this.state
     const userStore = this.props.userStore.getInstance()
+
+    userStore.setQueueStore(this.queueStore)
 
     const fetchData = {
       id: {
-        roomId: data._id,
-        queueId: currentQueue,
+        roomId: this.roomStore.id,
+        queueId: this.roomStore.currentQueue,
       },
     }
 
@@ -57,23 +52,22 @@ class RoomContainer extends React.Component {
       <div>
         <h1>Container</h1>
         <QueueList
-          queues={data.queues}
-          roomId={data._id}
           socket={this.socket}
           toggleQueue={this.toggleCurrentQueue}
+          userStore={userStore}
+          roomStore={this.roomStore}
         />
         <Queue
           fetchData={fetchData}
           fetchStore={this.queueStore}
           socket={this.socket}
-          queueId={currentQueue}
         />
-        <RoomActions
-          roomId={data._id}
-          queueId={currentQueue}
-          userStore={userStore}
-          queueStore={this.queueStore}
-        />
+        <If condition={!this.queueStore.isPending}>
+          <RoomActions
+            userStore={userStore}
+            queueStore={this.queueStore}
+          />
+        </If>
       </div>
     )
   }

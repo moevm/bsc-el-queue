@@ -12,9 +12,8 @@ class ComeInQueue extends React.Component {
     this.setState({
       loading: true,
     })
-    const { userStore, roomId, queueId } = this.props
 
-    await userStore.comeInQueue({ roomId, queueId })
+    await this.props.userStore.comeInQueue()
   }
 
   render() {

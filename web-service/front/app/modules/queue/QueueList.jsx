@@ -1,41 +1,47 @@
 import React from 'react'
+import { observer } from 'mobx-react'
 
+import QueueListItem from '@app/modules/queue/QueueListItem'
+import { UserRole } from '@app/constants'
+
+@observer
 class QueueList extends React.Component {
-  constructor(props) {
-    super(props)
-
-    this.state = {
-      queues: props.queues
-    }
-  }
-
   componentDidMount() {
-    const { socket, roomId } = this.props
+    const { socket, roomStore } = this.props
 
-    socket.emit('queues', roomId)
+    socket.emit('queues', roomStore.id)
 
     socket.on('queues', (queues) => {
-      this.setState({ queues })
+      roomStore.setQueues(queues)
     })
   }
 
-  handleQueueClick = (queueId) => () => {
+  handleQueueClick = (queueId) => {
     this.props.toggleQueue(queueId)
   }
 
+  handleQueueRemove = (queueId) => {
+    this.props.roomStore.removeQueue(queueId)
+  }
+
   render() {
-    const { queues } = this.state
+    const { roomStore, userStore } = this.props
+
+    const isQueueRemovable = userStore.role === UserRole.TEACHER
 
     return (
       <div>
         <div>Queue list:</div>
-        <For each='queue' of={queues}>
-          <div
+        <For each='queue' of={roomStore.queues}>
+          <QueueListItem
             key={queue.id}
-            onClick={this.handleQueueClick(queue.id)}
-          >
-            {queue.name}
-          </div>
+            id={queue.id}
+            name={queue.name}
+            onQueueClick={this.handleQueueClick}
+            onRemoveClick={this.handleQueueRemove}
+            isCurrent={roomStore.isQueueCurrent(queue.id)}
+            removable={isQueueRemovable}
+          />
         </For>
       </div>
     )

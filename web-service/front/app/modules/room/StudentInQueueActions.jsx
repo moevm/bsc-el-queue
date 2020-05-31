@@ -10,23 +10,19 @@ class StudentInQueueActions extends React.Component {
   }
 
   handleLeaveClick = async () => {
-    const { userStore, roomId, queueId } = this.props
-
     this.setState({
       leaveLoading: true,
     })
 
-    await userStore.leaveQueue({ roomId, queueId })
+    await this.props.userStore.leaveQueue()
   }
 
   handleSkipClick = async () => {
-    const { userStore, roomId, queueId } = this.props
-
     this.setState({
       skipLoading: true,
     })
 
-    await userStore.skipStudent({ roomId, queueId })
+    await this.props.userStore.skip()
       .then(() => {
         this.setState({
           skipLoading: false,

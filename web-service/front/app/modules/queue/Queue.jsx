@@ -5,13 +5,19 @@ import RemoteDataHOC from "@app/hocs/RemoteDataHOC";
 
 @observer
 class Queue extends React.Component {
-  componentDidMount() {
-    const { socket, queueId, fetchStore } = this.props
+  constructor(props) {
+    super(props)
 
-    socket.emit('students', queueId)
+    this.queueStore = this.props.fetchStore
+  }
+
+  componentDidMount() {
+    const { socket } = this.props
+
+    socket.emit('students', this.queueStore.id)
 
     socket.on('students', (students) => {
-      fetchStore.setStudents(students)
+      this.queueStore.setStudents(students)
     })
   }
 

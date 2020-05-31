@@ -27,6 +27,7 @@ const API = {
   },
   queue: {
     get: apiRequest('rooms/%(roomId)s/queues/%(queueId)s'),
+    delete: apiRequest('rooms/%(roomId)s/queues/%(queueId)s', 'delete'),
     addUser: apiRequest('rooms/%(roomId)s/queues/%(queueId)s/students/%(studentId)s', 'post'),
     checkIsUserInQueue: apiRequest('rooms/%(roomId)s/queues/%(queueId)s/students/%(studentId)s'),
     leave: apiRequest('rooms/%(roomId)s/queues/%(queueId)s/students/%(studentId)s', 'delete'),

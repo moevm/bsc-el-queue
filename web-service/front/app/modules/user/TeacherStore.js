@@ -13,6 +13,7 @@ class TeacherStore {
   @observable id = null
   @observable name = null
   @observable state = StoreState.INACTIVE
+  @observable queueStore = false
   role = UserRole.TEACHER
 
   @action
@@ -20,6 +21,11 @@ class TeacherStore {
     this.id = id
 
     localStorage.setItem(LOCAL_USER_ID, id)
+  }
+
+  @action
+  setQueueStore = (queueStore) => {
+    this.queueStore = queueStore
   }
 
   @action
@@ -50,24 +56,12 @@ class TeacherStore {
     }
   }
 
-  applyStudent = async ({ roomId, queueId, studentId }) => {
-    await API.queue.applyStudent({
-      id: {
-        roomId,
-        queueId,
-        studentId,
-      },
-    })
+  applyStudent = async (studentId) => {
+    await this.queueStore.applyStudent(studentId)
   }
 
-  rejectStudent = async ({ roomId, queueId, studentId }) => {
-    await API.queue.rejectStudent({
-      id: {
-        roomId,
-        queueId,
-        studentId,
-      },
-    })
+  rejectStudent = async (studentId) => {
+    await this.queueStore.rejectStudent(studentId)
   }
 }
 

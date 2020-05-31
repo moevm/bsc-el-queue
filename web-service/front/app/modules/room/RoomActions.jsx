@@ -8,45 +8,35 @@ import TeacherRoomActions from '@app/modules/room/TeacherRoomActions'
 import Text from '@locale'
 import { UserRole } from '@app/constants'
 
-class RoomActions extends React.Component {
-  render() {
-    const { roomId, queueId, userStore, queueStore } = this.props
-
-    if (userStore.role === UserRole.UNAUTHORIZED) {
-      return (
-        <>
-          <StudentRegistration
-            startButtonText={Text.page.main.studentAuthentication}
-            userStore={userStore}
-          />
-          <TeacherRegistration
-            startButtonText={Text.page.main.teacherAuthentication}
-            userStore={userStore}
-          />
-        </>
-      )
-    }
-
-    if (userStore.role === UserRole.TEACHER) {
-      return (
-        <TeacherRoomActions
-          userStore={userStore}
-          queueStore={queueStore}
-          roomId={roomId}
-          queueId={queueId}
-        />
-      )
-    }
-
+const RoomActions = ({ userStore }) => {
+  if (userStore.role === UserRole.STUDENT) {
     return (
       <StudentRoomActions
         userStore={userStore}
-        queueStore={queueStore}
-        roomId={roomId}
-        queueId={queueId}
       />
     )
   }
+
+  if (userStore.role === UserRole.TEACHER) {
+    return (
+      <TeacherRoomActions
+        userStore={userStore}
+      />
+    )
+  }
+
+  return (
+    <>
+      <StudentRegistration
+        startButtonText={Text.page.main.studentAuthentication}
+        userStore={userStore}
+      />
+      <TeacherRegistration
+        startButtonText={Text.page.main.teacherAuthentication}
+        userStore={userStore}
+      />
+    </>
+  )
 }
 
 export default RoomActions

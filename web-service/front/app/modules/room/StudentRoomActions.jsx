@@ -3,43 +3,21 @@ import { observer } from 'mobx-react'
 
 import ComeInQueue from '@app/modules/room/ComeInQueue'
 import StudentInQueueActions from '@app/modules/room/StudentInQueueActions'
-import { UserRole } from '@app/constants'
 
-@observer
-class StudentRoomActions extends React.Component {
-  componentDidMount() {
-    const { roomId, queueId, userStore } = this.props
-
-    if (userStore.role === UserRole.STUDENT) {
-      userStore.checkIsInQueue({
-        roomId,
-        queueId,
-      })
-    }
-  }
-
-  render() {
-    const { roomId, queueId, userStore } = this.props
-
-    if (!userStore.isInQueue) {
-      return (
-        <ComeInQueue
-          roomId={roomId}
-          queueId={queueId}
-          userStore={userStore}
-        />
-      )
-    }
-
+const StudentRoomActions = ({ userStore }) => {
+  if (!userStore.isInQueue) {
     return (
-      <StudentInQueueActions
-        roomId={roomId}
-        queueId={queueId}
+      <ComeInQueue
         userStore={userStore}
-
       />
     )
   }
+
+  return (
+    <StudentInQueueActions
+      userStore={userStore}
+    />
+  )
 }
 
-export default StudentRoomActions
+export default StudentRoomActions |> observer
