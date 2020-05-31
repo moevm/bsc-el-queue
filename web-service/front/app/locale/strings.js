@@ -33,9 +33,9 @@ export default {
       skip: 'Пропустить вперёд',
       applyStudent: 'Принять текущего',
       rejectStudent: 'Отклонить текущего',
-      newQueue: 'Новая комната',
-      queueName: 'Название комнаты',
-      queueNameError: 'Необходимо ввести название комнаты',
+      newQueue: 'Новая очередь',
+      queueName: 'Название очередь',
+      queueNameError: 'Необходимо ввести название очереди',
     },
   },
 
