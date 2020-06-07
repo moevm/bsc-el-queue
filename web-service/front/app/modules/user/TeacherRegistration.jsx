@@ -157,7 +157,9 @@ class TeacherRegistration extends React.Component {
             message: Text.registration.passwordError,
           }]}
         >
-          <Input/>
+          <Input
+            type="password"
+          />
         </Form.Item>
       </Form>
     )

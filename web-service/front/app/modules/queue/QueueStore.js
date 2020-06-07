@@ -14,12 +14,18 @@ export default class QueueStore extends AbstractFetchStore {
 
   @computed
   get id() {
+    console.log(this.data)
     return this.data?._id
   }
 
   @computed
   get roomId() {
     return this.data?.room_id
+  }
+
+  @computed
+  get name() {
+    return this.data?.name
   }
 
   @computed

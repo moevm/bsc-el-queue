@@ -1,4 +1,3 @@
-import * as R from 'ramda'
 import { computed } from 'mobx'
 
 import { UserRole } from '@app/constants'
@@ -10,7 +9,7 @@ class StudentStore extends UserStore {
 
     this.id = studentId
     this.data = data
-    this.role = UserRole.TEACHER
+    this.role = UserRole.STUDENT
   }
 
   @computed
@@ -21,11 +20,6 @@ class StudentStore extends UserStore {
   @computed
   get isInQueue() {
     return this.queueStore.isStudentInQueue(this.id)
-  }
-
-  @computed
-  get isAuthorized() {
-    return this.id |> R.isNil |> R.not
   }
 
   comeInQueue = async () => {

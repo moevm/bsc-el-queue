@@ -55,16 +55,17 @@ class QueueItem extends React.Component {
             visible={this.state.visible}
             onOk={this.handleOk}
             onCancel={this.handleCancel}
+            footer={null}
           >
             <Button
               onClick={this.handleApplyCurrentStudent}
             >
-              {Text.page.room.applyStudent}
+              {Text.common.apply}
             </Button>
             <Button
               onClick={this.handleRejectCurrentStudent}
             >
-              {Text.page.room.rejectStudent}
+              {Text.common.reject}
             </Button>
           </Modal>
         </If>

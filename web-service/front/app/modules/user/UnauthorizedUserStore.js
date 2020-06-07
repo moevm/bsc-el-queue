@@ -1,6 +1,6 @@
 import StudentStore from '@app/modules/user/StudentStore'
 
-import { LOCAL_USER_ID, StoreState } from '@app/constants'
+import { LOCAL_USER_ID, StoreState, UserRole } from '@app/constants'
 
 import API from '@app/api'
 import logger from '@app/lib/logger'
@@ -25,6 +25,7 @@ class UnauthorizedUserStore extends UserStore {
       })
 
       this.setId(studentId)
+      this.setRole(UserRole.STUDENT)
 
       return studentId
     } catch (error) {
@@ -67,6 +68,7 @@ class UnauthorizedUserStore extends UserStore {
       })
 
       this.setId(teacherId)
+      this.setRole(UserRole.TEACHER)
 
       return teacherId
     } catch (error) {
@@ -78,15 +80,10 @@ class UnauthorizedUserStore extends UserStore {
 
   teacherLogin = async ({ teacherId, password }) => {
     try {
-      // const result = await API.teacher.login({
-      //   body: {
-      //     teacherId,
-      //     password
-      //   },
-      // })
-      const result = await API.student.login({
-        id: {
-          studentId: teacherId,
+      const result = await API.teacher.login({
+        body: {
+          teacherId,
+          password
         },
       })
 

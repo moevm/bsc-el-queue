@@ -54,7 +54,17 @@ export default {
     passwordError: 'Наобходимо ввести пароль',
   },
 
+  logger: {
+    studentConnected: '%s присоединился к очереди',
+    studentLeave: '%s покинул очередь',
+    studentSkip: '%s пропустил вперёд',
+    applyStudentWork: '%s принял работу %s',
+    rejectStudentWork: '%s отклонил работу %s',
+  },
+
   common: {
-    create: 'Создать'
+    create: 'Создать',
+    apply: 'Принять',
+    reject: 'Отклонить',
   },
 }
