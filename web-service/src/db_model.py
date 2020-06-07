@@ -112,10 +112,6 @@ def get_student_by_id(student_id, db=get_db_object()):
 
 
 def add_student_to_queue(queue_id, student_id, db=get_db_object()):
-    queue = db[QUEUES].find_one({
-        '_id': ObjectId(queue_id)
-    })
-
     student = db[USERS].find_one({
         '_id': ObjectId(student_id)
     })
@@ -215,3 +211,30 @@ def get_user_by_id(user_id, db=get_db_object()):
     user = db[USERS].find_one({'_id': ObjectId(user_id)})
 
     return user
+
+def is_teacher_in_room(room_id, teacher_id, db=get_db_object()):
+    room = db[ROOMS].find_one({'_id': ObjectId(room_id)})
+
+    teacher_in_room = find(room['teachers'], lambda _teacher_id: _teacher_id == teacher_id)
+
+    if teacher_in_room:
+        return True
+
+    return False
+
+
+def add_teacher_to_room(room_id, teacher_id, db=get_db_object()):
+    teacher_in_room = is_teacher_in_room(room_id, teacher_id, db)
+
+    if teacher_in_room:
+        return False
+
+    db[ROOMS].find_one_and_update({
+        '_id': ObjectId(room_id)
+    }, {
+        '$push': {
+            'teachers':  teacher_id,
+        }
+    })
+
+    return True

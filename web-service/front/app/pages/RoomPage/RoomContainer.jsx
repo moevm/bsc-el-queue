@@ -9,8 +9,11 @@ import QueueList from '@app/modules/queue/QueueList'
 import RoomActions from '@app/modules/room/RoomActions'
 
 import QueueStore from '@app/modules/queue/QueueStore'
+import RoomLogger from '@app/modules/roomLogger/RoomLogger'
 
+import Text from '@locale'
 import { getSocketio } from '@app/socket'
+import RoomSettings from '@app/modules/room/RoomSettings'
 
 @inject('userStore')
 @observer
@@ -51,7 +54,9 @@ class RoomContainer extends React.Component {
 
     return (
       <div>
-        <h1>Container</h1>
+        <h1>{this.roomStore?.data.name}</h1>
+        <h3>ID комнаты: {this.roomStore?.data._id}</h3>
+        <h3>Очередь: {this.queueStore?.name}</h3>
         <QueueList
           socket={this.socket}
           toggleQueue={this.toggleCurrentQueue}
@@ -64,6 +69,11 @@ class RoomContainer extends React.Component {
           socket={this.socket}
           userStore={userStore}
         />
+        <If condition={userStore.isTeacher}>
+          <RoomSettings
+            userStore={userStore}
+          />
+        </If>
         <If condition={!this.queueStore.isPending}>
           <RoomActions
             userStore={userStore}

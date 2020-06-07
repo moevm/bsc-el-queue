@@ -52,6 +52,10 @@ class TeacherStore extends UserStore {
   rejectStudent = async (studentId) => {
     await this.queueStore.rejectStudent(studentId)
   }
+
+  addTeacher = async (teacherId) => {
+    await this.roomStore.addTeacher(teacherId)
+  }
 }
 
 export default TeacherStore

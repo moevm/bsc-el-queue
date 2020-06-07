@@ -59,4 +59,14 @@ export default class RoomStore extends AbstractFetchStore {
       },
     })
   }
+
+  addTeacher = async (teacherId) => {
+    console.log(teacherId)
+    await API.room.addTeacher({
+      id: {
+        roomId: this.id,
+        teacherId,
+      }
+    })
+  }
 }
