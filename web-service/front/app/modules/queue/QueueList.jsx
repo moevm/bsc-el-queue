@@ -9,9 +9,9 @@ class QueueList extends React.Component {
   componentDidMount() {
     const { socket, roomStore } = this.props
 
-    socket.emit('queues', roomStore.id)
+    socket.emit('room connect', roomStore.id)
 
-    socket.on('queues', (queues) => {
+    socket.on('queue update', (queues) => {
       roomStore.setQueues(queues)
     })
   }

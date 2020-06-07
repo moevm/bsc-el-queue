@@ -15,9 +15,9 @@ class Queue extends React.Component {
   componentDidMount() {
     const { socket } = this.props
 
-    socket.emit('students', this.queueStore.id)
+    socket.emit('queue connect', this.queueStore.id)
 
-    socket.on('students', (students) => {
+    socket.on('students update', (students) => {
       this.queueStore.setStudents(students)
     })
   }
