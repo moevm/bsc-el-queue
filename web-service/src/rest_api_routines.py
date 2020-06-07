@@ -50,8 +50,8 @@ def addResources():
     getApi().add_resource(CreateStudent, API_ROUTE + '/students')
     getApi().add_resource(GetStudent, API_ROUTE + '/students/<string:student_id>')
 
-    getApi().add_resource(CreateTeacher, API_ROUTE + '/teaches')
-    getApi().add_resource(LoginTeacher, API_ROUTE + '/teaches/login')
+    getApi().add_resource(CreateTeacher, API_ROUTE + '/teachers')
+    getApi().add_resource(LoginTeacher, API_ROUTE + '/teachers/login')
 
     getApi().add_resource(GetUserRole, API_ROUTE + '/users/<string:user_id>/role')
     getApi().add_resource(GetUser, API_ROUTE + '/users/<string:user_id>')

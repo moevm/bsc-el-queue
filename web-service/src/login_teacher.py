@@ -8,6 +8,6 @@ class LoginTeacher(Resource):
     def post(self):
         body = request.get_json()
 
-        authenticated = login_teacher(body['id'], body['password'])
+        authenticated = login_teacher(body['teacherId'], body['password'])
 
         return authenticated
