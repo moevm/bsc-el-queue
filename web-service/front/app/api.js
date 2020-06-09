@@ -2,9 +2,9 @@ import { sprintf } from 'sprintf-js'
 
 import request from '@app/lib/request'
 
-// import { BASE_URL_PATH } from '@app/constants'
-// const API_PREFIX = [BASE_URL_PATH, 'api'].join('')
-const API_PREFIX = ['http://server-test.com'].join('')
+import { BASE_URL_PATH } from '@app/constants'
+const API_PREFIX = [BASE_URL_PATH, 'api'].join('')
+// const API_PREFIX = ['http://server-test.com'].join('')
 
 // Prepare url path
 export const url = path => `${API_PREFIX}/${path}`
