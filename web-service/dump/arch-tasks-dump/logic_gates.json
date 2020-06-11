@@ -1,0 +1,2 @@
+{"task_id" : "CreateSchemeFromFormula", "vars_count":2, "definition":"Постройте логическую схему для данного выражения:", "inputs":["X", "Y"]}
+{"task_id" : "CreateSchemeFromTruthtable", "number-variables":2, "random-seed":0, "definition":"Постройте логическую схему для данной таблицы истинности:", "inputs":["X", "Y"]}
