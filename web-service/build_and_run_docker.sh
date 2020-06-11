@@ -33,4 +33,4 @@ fi
 
 docker rm -f ${container_name}
 docker build --no-cache=${no_cache} -t ${container_name}_image  -f ./Dockerfile ../
-docker run ${port_arg} -d --restart=${restart_image} --name ${container_name} -t ${container_name}_image
+docker run ${port_arg} -p 3280:80 -p 3281:81 -d --restart=${restart_image} --name ${container_name} -t ${container_name}_image
