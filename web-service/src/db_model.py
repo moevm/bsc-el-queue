@@ -7,7 +7,9 @@ import datetime
 from constants import DEFAULT_QUEUE_NAME, Roles
 
 MONGO_CLIENT = None
-HOST = 'localhost'
+# HOST = '172.17.0.2'
+# HOST = 'localhost'
+HOST = '127.0.0.1'
 PORT = 27018
 ROOMS = 'rooms'
 QUEUES = 'queues'

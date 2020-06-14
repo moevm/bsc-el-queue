@@ -29,7 +29,7 @@ CONFIG=$CATALOG.conf
 HOSTS_STRING="127.0.1.1       ${HOST}"
 
 mkdir -p /mongodb/rs0
-mongod --replSet rs0 --dbpath /mongodb/rs0  --bind_ip localhost --port 27018 --fork --logpath /mongodb/mongodb.log
+mongod --replSet rs0 --dbpath /mongodb/rs0  --bind_ip 127.0.0.1 --port 27018 --fork --logpath /mongodb/mongodb.log
 
 python3 -m easy_install --upgrade pyOpenSSL
 pip3 install -r scripts/requirements.txt
