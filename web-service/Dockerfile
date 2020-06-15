@@ -21,7 +21,10 @@ RUN rm /etc/apache2/sites-enabled/000-default.conf
 COPY --from=0 "/front-test.com/dist/"  /var/www/front-test.com/public
 
 RUN service mongodb restart && ./scripts/local_deploy.sh
-CMD /etc/init.d/apache2 restart && service mongodb restart &&  /usr/sbin/sshd -D \
+CMD /etc/init.d/apache2 restart \
+    && service mongodb restart \
+    && mongod --replSet rs0 --dbpath /mongodb/rs0  --bind_ip 127.0.0.1 --port 27018 --fork --logpath /mongodb/mongodb.log \
+    &&  /usr/sbin/sshd -D \
     -o UseDNS=no\
     -o UsePAM=no\
     -o PasswordAuthentication=yes\

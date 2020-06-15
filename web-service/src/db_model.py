@@ -11,6 +11,7 @@ MONGO_CLIENT = None
 # HOST = 'localhost'
 HOST = '127.0.0.1'
 PORT = 27018
+REPLICASET = 'rs0'
 ROOMS = 'rooms'
 QUEUES = 'queues'
 USERS = 'users'
@@ -27,7 +28,7 @@ def get_db_object():
 def get_client_object():
     global MONGO_CLIENT
     if MONGO_CLIENT is None:
-        MONGO_CLIENT = MongoClient(HOST, PORT)
+        MONGO_CLIENT = MongoClient(HOST, PORT, replicaset=REPLICASET)
     return MONGO_CLIENT
 
 
@@ -214,6 +215,7 @@ def get_user_by_id(user_id, db=get_db_object()):
 
     return user
 
+
 def is_teacher_in_room(room_id, teacher_id, db=get_db_object()):
     room = db[ROOMS].find_one({'_id': ObjectId(room_id)})
 
@@ -235,7 +237,7 @@ def add_teacher_to_room(room_id, teacher_id, db=get_db_object()):
         '_id': ObjectId(room_id)
     }, {
         '$push': {
-            'teachers':  teacher_id,
+            'teachers': teacher_id,
         }
     })
 
