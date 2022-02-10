@@ -42,7 +42,7 @@
     "jsx-control-statements": "^3.2.8",
     "lodash": "latest",
     "mini-css-extract-plugin": "^0.8.0",
-    "node-sass": "^4.5.3",
+    "node-sass": "^7.0.0",
     "postcss-loader": "^3.0.0",
     "react-hot-loader": "^4.7.1",
     "resolve-url-loader": "^3.1.0",
